@@ -16,6 +16,8 @@
   --primary: #38bdf8;
   --accent: #6366f1;
   --shadow: rgba(0, 0, 0, 0.1);
+  --particle: rgba(99, 102, 241, 0.5);
+  --particle-line: rgba(99, 102, 241, 0.15);
 }
 
 /* Variabel Tema (Dark) */
@@ -28,6 +30,8 @@ body.dark {
   --primary: #38bdf8;
   --accent: #818cf8;
   --shadow: rgba(0, 0, 0, 0.5);
+  --particle: rgba(56, 189, 248, 0.6);
+  --particle-line: rgba(56, 189, 248, 0.15);
 }
 
 body {
@@ -35,6 +39,25 @@ body {
   color: var(--text);
   line-height: 1.6;
   transition: background 0.4s, color 0.4s;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Particle Canvas */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Semua konten di atas particle */
+header, section, footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* Navbar */
@@ -80,14 +103,17 @@ body {
 .theme-btn {
   background: transparent;
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   cursor: pointer;
   color: var(--nav-text);
   transition: transform 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .theme-btn:hover {
-  transform: rotate(20deg);
+  transform: scale(1.1);
 }
 
 .menu-toggle {
@@ -103,7 +129,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.9), rgba(99, 102, 241, 0.9));
   color: #fff;
   padding: 2rem;
 }
@@ -112,7 +138,7 @@ body {
   font-size: 2.5rem;
 }
 
-.hero h2 span {
+.hero h2 span:not(.cursor) {
   color: #facc15;
 }
 
@@ -120,6 +146,7 @@ body {
   display: inline-block;
   color: #facc15;
   animation: blink 0.8s infinite;
+  margin-left: 2px;
 }
 
 @keyframes blink {
@@ -182,11 +209,13 @@ section h2 {
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px var(--shadow);
-  transition: transform 0.3s, background 0.4s;
+  transition: transform 0.3s, background 0.4s, box-shadow 0.3s;
+  backdrop-filter: blur(4px);
 }
 
 .project-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow);
 }
 
 .project-card h3 {
@@ -211,7 +240,13 @@ section h2 {
   font-size: 1rem;
   background: var(--card);
   color: var(--text);
-  transition: background 0.4s, color 0.4s;
+  transition: background 0.4s, color 0.4s, border 0.3s;
+}
+
+.contact input:focus,
+.contact textarea:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .contact textarea {
