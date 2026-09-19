@@ -151,4 +151,106 @@ sections.forEach(section => {
   section.style.transform = 'translateY(30px)';
   section.style.transition = 'all 0.8s ease-out';
   observer.observe(section);
+
+
+  /* ============================
+   1. Kamus Multi-Bahasa (ID/EN)
+============================ */
+const translations = {
+  id: {
+    logo: "MyPortfolio",
+    nav_home: "Home",
+    nav_about: "About",
+    nav_projects: "Projects",
+    nav_contact: "Contact",
+    hero_greeting: "Halo, Saya",
+    hero_role: "Web Developer | UI Designer | Freelancer",
+    hero_btn: "Lihat Proyek",
+    about_title: "Tentang Saya",
+    about_desc: "Saya adalah seorang pengembang web yang berfokus pada pembuatan website modern, responsif, dan ramah pengguna.",
+    projects_title: "Proyek Saya",
+    proj1_title: "Website Company Profile",
+    proj1_desc: "Website profil perusahaan dengan desain modern dan responsif.",
+    proj2_title: "Aplikasi Todo List",
+    proj2_desc: "Aplikasi sederhana untuk mencatat aktivitas harian.",
+    proj3_title: "Landing Page Produk",
+    proj3_desc: "Halaman promosi produk dengan animasi interaktif.",
+    contact_title: "Kontak",
+    form_name: "Nama",
+    form_email: "Email",
+    form_message: "Pesan",
+    form_send: "Kirim",
+    footer: "© 2025 MyPortfolio. All rights reserved.",
+    msg_empty: "Mohon isi semua field!",
+    msg_email: "Format email tidak valid!",
+    msg_success: "Pesan berhasil dikirim! Terima kasih 🙌",
+    msg_fail: "Gagal mengirim pesan. Coba lagi ya.",
+    msg_network: "Terjadi kesalahan jaringan.",
+    typing_words: ["Developer", "Designer", "Freelancer", "Creator"]
+  },
+  en: {
+    logo: "MyPortfolio",
+    nav_home: "Home",
+    nav_about: "About",
+    nav_projects: "Projects",
+    nav_contact: "Contact",
+    hero_greeting: "Hello, I'm",
+    hero_role: "Web Developer | UI Designer | Freelancer",
+    hero_btn: "View Projects",
+    about_title: "About Me",
+    about_desc: "I am a web developer focused on building modern, responsive, and user-friendly websites.",
+    projects_title: "My Projects",
+    proj1_title: "Company Profile Website",
+    proj1_desc: "Company profile website with a modern and responsive design.",
+    proj2_title: "Todo List App",
+    proj2_desc: "A simple app to record daily activities.",
+    proj3_title: "Product Landing Page",
+    proj3_desc: "Product promotion page with interactive animations.",
+    contact_title: "Contact",
+    form_name: "Name",
+    form_email: "Email",
+    form_message: "Message",
+    form_send: "Send",
+    footer: "© 2025 MyPortfolio. All rights reserved.",
+    msg_empty: "Please fill in all fields!",
+    msg_email: "Invalid email format!",
+    msg_success: "Message sent successfully! Thank you 🙌",
+    msg_fail: "Failed to send message. Try again.",
+    msg_network: "Network error occurred.",
+    typing_words: ["Developer", "Designer", "Freelancer", "Creator"]
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'id';
+const langToggle = document.getElementById('lang-toggle');
+const langLabel = document.getElementById('lang-label');
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  const dict = translations[lang];
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) el.placeholder = dict[key];
+  });
+
+  document.documentElement.lang = lang;
+  langLabel.textContent = lang.toUpperCase();
+  localStorage.setItem('lang', lang);
+
+  // Restart typing effect dengan kata baru
+  restartTyping();
+}
+
+langToggle.addEventListener('click', () => {
+  applyLanguage(currentLang === 'id' ? 'en' : 'id');
+});
+
+// Inisialisasi bahasa awal
+applyLanguage(currentLang);
 });
